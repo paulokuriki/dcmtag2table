@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import time
 
+
 def dcmtag2table(folder, list_of_tags):
     """
     # Create a Pandas DataFrame with the <list_of_tags> DICOM tags
@@ -44,12 +45,11 @@ def dcmtag2table(folder, list_of_tags):
         except:
             print("Skipping non-DICOM: " + _f)
 
-            
     list_of_tags.insert(0, "Filename")
     test = list(map(list, zip(*table)))
     dictone = {}
 
-    for i, _tag in enumerate (list_of_tags):
+    for i, _tag in enumerate(list_of_tags):
         dictone[_tag] = test[i]
 
     df = pd.DataFrame(dictone)
