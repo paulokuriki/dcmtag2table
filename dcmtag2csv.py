@@ -49,7 +49,8 @@ def dcmtag2df(folder, list_of_tags):
 
             for _tag in list_of_tags:
                 if _tag in ds:
-                    items.append(ds.data_element(_tag).value)
+                    #items.append(ds.data_element(_tag).value)
+                    items.append(str(ds.data_element(_tag).value))
                 else:
                     items.append("Not found")
 
@@ -81,6 +82,7 @@ list_of_tags = [
     "AcquisitionTime",
     "ConvolutionKernel",
     "ImageOrientationPatient",
+    "ImageTime",
     "InstitutionName",
     "Manufacturer",
     "ManufacturersModelName",
@@ -91,6 +93,7 @@ list_of_tags = [
     "ProtocolName",
     "SeriesDescription",
     "SeriesInstanceUID",
+    "SeriesTime",
     "SOPClassUID",
     "SOPInstanceUID",
     "SpacingBetweenSlices",
@@ -98,6 +101,7 @@ list_of_tags = [
     "StudyDescription",
     "StudyID",
     "StudyInstanceUID",
+    "StudyTime"
 ]
 
 #folder = "C:\\Users\\paulo\\Desktop\\dicom\\"
@@ -109,10 +113,10 @@ export_csv = os.path.join(folder, 'export.csv')
 df = dcmtag2df(folder, list_of_tags)
 
 try:
-    if df:
+    if len(df.index) > 0:
         df.to_csv(export_csv)
         print(f'{export_csv} exported successfully.')
     else:
         print(f'{export_csv} not modified.')
-except:
-    print(f'Error exporting {export_csv} file.')
+except Exception as e:
+    print(f'Error exporting {export_csv} file.\n' + str(e))
